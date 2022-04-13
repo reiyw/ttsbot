@@ -18,7 +18,7 @@ RUN cargo chef cook --release --recipe-path recipe.json
 
 COPY src src
 COPY Cargo.toml .
-ENV DATABASE_URL dummy
+ENV DATABASE_URL mysql://foo/bar
 RUN cargo build --release
 
 FROM debian:bullseye-slim AS runtime
