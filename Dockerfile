@@ -18,7 +18,9 @@ RUN cargo chef cook --release --recipe-path recipe.json
 
 COPY src src
 COPY Cargo.toml .
-RUN cargo build --release
+RUN --mount=type=secret,id=DATABASE_URL \
+    DATABASE_URL=$(cat /run/secrets/DATABASE_URL) \
+    cargo build --release
 
 FROM debian:bullseye-slim AS runtime
 WORKDIR /app
